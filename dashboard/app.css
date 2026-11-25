@@ -1,5 +1,13 @@
-/* Token Radar's theme, radar-2. One palette, two radii, two families; everything else is spacing,
-   a hairline and a type step. The watchlist badge is the only warm note: amber for the floor. */
+/* Token Radar's stylesheet, radar-2.
+ *
+ * One palette, two radii, two typefaces, and a spacing scale do the whole job; everything else
+ * is a hairline, a gap, or a type step. The watchlist badge is the only warm note — amber for
+ * the floor. The drawer, the table and the model panel share the same panel treatment.
+ *
+ * Layout, in reading order: page shell and header, the lede and its facts, the filter controls,
+ * the board table, the model panel, then the detail drawer and the small-screen rules. */
+
+/* ---- Tokens: palette, radii, type, spacing ---- */
 :root {
   --canvas: #edf1ed;
   --surface: #ffffff;
@@ -24,6 +32,7 @@
   --step-7: 48px;
 }
 
+/* ---- Base: reset, type, focus ---- */
 * { box-sizing: border-box; }
 html { color-scheme: light; }
 body {
@@ -41,13 +50,18 @@ p { margin: 0; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: var(--accent); }
-.skip {
-  position: absolute; left: -9999px; top: 0; padding: var(--step-2) var(--step-4);
-  background: var(--surface); border: 1px solid var(--border); z-index: 20;
-}
-.skip:focus { left: var(--step-4); top: var(--step-4); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* The skip link stays off-screen until it takes focus. */
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 20;
+  padding: var(--step-2) var(--step-4);
+  background: var(--surface); border: 1px solid var(--border);
+}
+.skip:focus { left: var(--step-4); top: var(--step-4); }
+.noscript { padding: var(--step-5); color: var(--muted); }
+
+/* ---- Page shell and header ---- */
 .shell { max-width: 1320px; margin: 0 auto; padding: var(--step-5) var(--step-6) var(--step-7); }
 .top {
   display: flex; align-items: flex-start; justify-content: space-between; gap: var(--step-5);
@@ -58,6 +72,8 @@ a { color: var(--accent); }
 .brand-name { font-family: var(--font-num); font-size: 13px; letter-spacing: 0.02em; color: var(--muted); }
 .top-meta { display: flex; flex-wrap: wrap; gap: var(--step-3); justify-content: flex-end; color: var(--muted); font-size: 13px; }
 .top-meta span { white-space: nowrap; }
+
+/* ---- Lede and its facts ---- */
 .lede { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); gap: var(--step-6); padding: var(--step-6) 0 var(--step-5); }
 .lede p { color: var(--muted); max-width: 62ch; margin-top: var(--step-2); }
 .facts { display: grid; gap: var(--step-2); align-content: start; border-left: 1px solid var(--border); padding-left: var(--step-5); }
@@ -65,6 +81,7 @@ a { color: var(--accent); }
 .fact b { font-family: var(--font-num); font-size: 15px; font-weight: 500; }
 .fact span { color: var(--muted); font-size: 13px; }
 
+/* ---- Filter controls ---- */
 .controls { display: flex; flex-wrap: wrap; align-items: end; gap: var(--step-3); padding: var(--step-4) 0; border-top: 1px solid var(--border); }
 .field { display: grid; gap: var(--step-1); }
 .field label { color: var(--muted); font-size: 12px; }
@@ -81,6 +98,7 @@ a { color: var(--accent); }
 .toggle[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); color: var(--amber); }
 .count { margin-left: auto; color: var(--muted); font-size: 13px; align-self: center; }
 
+/* ---- Panels and the board table ---- */
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-panel); overflow: hidden; }
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -91,6 +109,8 @@ th button:hover { color: var(--ink); }
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--accent-soft); }
 tbody tr[data-selected="true"] { background: var(--accent-soft); }
+
+/* Cell treatments: numbers, names, growth, the implied-value bar, badges. */
 .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .name { display: grid; gap: 2px; }
 .name b { font-weight: 600; }
@@ -108,17 +128,21 @@ tbody tr[data-selected="true"] { background: var(--accent-soft); }
 }
 .badge.early { background: var(--accent-soft); color: var(--accent); }
 
+/* ---- Model panel ---- */
 .model { margin-top: var(--step-4); padding: var(--step-5); display: grid; gap: var(--step-3); }
 .formula { font-family: var(--font-num); font-size: 13px; line-height: 1.7; color: var(--muted); overflow-wrap: anywhere; }
 .multiples { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--step-2); margin-top: var(--step-2); }
 .multiple { display: flex; justify-content: space-between; gap: var(--step-2); padding: var(--step-2) var(--step-3); border: 1px solid var(--border); border-radius: var(--radius-control); font-size: 13px; }
 .multiple b { font-family: var(--font-num); font-weight: 500; }
 .multiple span { color: var(--muted); }
+
+/* ---- Empty state and buttons ---- */
 .empty { padding: var(--step-7) var(--step-5); text-align: center; display: grid; gap: var(--step-3); justify-items: center; }
 .empty p { color: var(--muted); }
 .button { min-height: 36px; padding: 0 var(--step-4); border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); }
 .button.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
 
+/* ---- Detail drawer ---- */
 .detail {
   position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 94vw); z-index: 10;
   background: var(--surface); border-left: 1px solid var(--border); padding: var(--step-5);
@@ -143,6 +167,7 @@ tbody tr[data-selected="true"] { background: var(--accent-soft); }
 .steps b { display: block; font-weight: 500; }
 .cost { color: var(--muted); font-size: 12px; font-family: var(--font-num); }
 
+/* ---- Small screens and reduced motion ---- */
 @media (max-width: 900px) {
   .shell { padding: var(--step-4); }
   .lede { grid-template-columns: 1fr; gap: var(--step-4); }
